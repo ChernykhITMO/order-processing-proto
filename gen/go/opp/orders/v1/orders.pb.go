@@ -25,31 +25,19 @@ const (
 type OrderStatus int32
 
 const (
-	OrderStatus_UNSPECIFIED       OrderStatus = 0
-	OrderStatus_NEW               OrderStatus = 1
-	OrderStatus_PAYMENT_PENDING   OrderStatus = 2
-	OrderStatus_PAID              OrderStatus = 3
-	OrderStatus_INVENTORY_PENDING OrderStatus = 4
-	OrderStatus_COMPLETED         OrderStatus = 5
+	OrderStatus_unspecified OrderStatus = 0
+	OrderStatus_new         OrderStatus = 1
 )
 
 // Enum value maps for OrderStatus.
 var (
 	OrderStatus_name = map[int32]string{
-		0: "UNSPECIFIED",
-		1: "NEW",
-		2: "PAYMENT_PENDING",
-		3: "PAID",
-		4: "INVENTORY_PENDING",
-		5: "COMPLETED",
+		0: "unspecified",
+		1: "new",
 	}
 	OrderStatus_value = map[string]int32{
-		"UNSPECIFIED":       0,
-		"NEW":               1,
-		"PAYMENT_PENDING":   2,
-		"PAID":              3,
-		"INVENTORY_PENDING": 4,
-		"COMPLETED":         5,
+		"unspecified": 0,
+		"new":         1,
 	}
 )
 
@@ -245,7 +233,7 @@ func (x *Order) GetStatus() OrderStatus {
 	if x != nil {
 		return x.Status
 	}
-	return OrderStatus_UNSPECIFIED
+	return OrderStatus_unspecified
 }
 
 func (x *Order) GetItems() []*OrderItem {
@@ -490,14 +478,10 @@ const file_opp_orders_v1_orders_proto_rawDesc = "" +
 	"\x0fGetOrderRequest\x12\x19\n" +
 	"\border_id\x18\x01 \x01(\x03R\aorderId\":\n" +
 	"\x10GetOrderResponse\x12&\n" +
-	"\x05order\x18\x01 \x01(\v2\x10.orders.v1.OrderR\x05order*l\n" +
+	"\x05order\x18\x01 \x01(\v2\x10.orders.v1.OrderR\x05order*'\n" +
 	"\vOrderStatus\x12\x0f\n" +
-	"\vUNSPECIFIED\x10\x00\x12\a\n" +
-	"\x03NEW\x10\x01\x12\x13\n" +
-	"\x0fPAYMENT_PENDING\x10\x02\x12\b\n" +
-	"\x04PAID\x10\x03\x12\x15\n" +
-	"\x11INVENTORY_PENDING\x10\x04\x12\r\n" +
-	"\tCOMPLETED\x10\x052\xa2\x01\n" +
+	"\vunspecified\x10\x00\x12\a\n" +
+	"\x03new\x10\x012\xa2\x01\n" +
 	"\rOrdersService\x12L\n" +
 	"\vCreateOrder\x12\x1d.orders.v1.CreateOrderRequest\x1a\x1e.orders.v1.CreateOrderResponse\x12C\n" +
 	"\bGetOrder\x12\x1a.orders.v1.GetOrderRequest\x1a\x1b.orders.v1.GetOrderResponseBNZLgithub.com/ChernykhITMO/order-processing-proto/gen/go/opp/orders/v1;ordersv1b\x06proto3"

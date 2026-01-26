@@ -12,12 +12,8 @@ service OrdersService {
 }
 
 enum OrderStatus {
-  UNSPECIFIED = 0;
-  NEW = 1;
-  PAYMENT_PENDING = 2;
-  PAID = 3;
-  INVENTORY_PENDING = 4;
-  COMPLETED = 5;
+  unspecified = 0;
+  new = 1;
 }
 
 message Money {
