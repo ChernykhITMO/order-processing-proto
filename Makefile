@@ -1,15 +1,16 @@
-PROTOC ?= protoc
-PROTO_DIR := proto
+GOPATH ?= $(shell go env GOPATH)
+EASYP ?= $(or $(shell command -v easyp 2>/dev/null),$(GOPATH)/bin/easyp)
 GEN_DIR := gen/go
-PROTO_FILE := $(PROTO_DIR)/opp/orders/v1/orders.proto
 
-.PHONY: proto clean
+.PHONY: proto proto-deps clean
 
-proto:
+proto: proto-deps
+	rm -rf $(GEN_DIR)
 	@mkdir -p $(GEN_DIR)
-	$(PROTOC) -I $(PROTO_DIR) $(PROTO_FILE) \
-		--go_out=$(GEN_DIR) --go_opt=paths=source_relative \
-		--go-grpc_out=$(GEN_DIR) --go-grpc_opt=paths=source_relative
+	$(EASYP) generate
+
+proto-deps:
+	$(EASYP) mod download
 
 clean:
 	rm -rf $(GEN_DIR)

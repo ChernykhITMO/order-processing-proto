@@ -5,6 +5,7 @@ package orders.v1;
 option go_package = "github.com/ChernykhITMO/order-processing-proto/gen/go/opp/orders/v1;ordersv1";
 
 import "google/protobuf/timestamp.proto";
+import "google/type/money.proto";
 
 service OrdersService {
   rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
@@ -12,18 +13,18 @@ service OrdersService {
 }
 
 enum OrderStatus {
-  unspecified = 0;
-  new = 1;
-}
+  ORDER_STATUS_UNSPECIFIED = 0;
+  ORDER_STATUS_CREATED = 1;
 
-message Money {
-  int64 money = 1;
+  reserved 2, 3;
+  reserved "ORDER_STATUS_PROCESSED";
+  reserved "ORDER_STATUS_CANCELLED";
 }
 
 message OrderItem {
   int64 product_id = 1;
   int32 quantity = 2;
-  Money price = 3;
+  google.type.Money price = 3;
 }
 
 message Order {
@@ -31,10 +32,9 @@ message Order {
   int64 user_id = 2;
   OrderStatus status = 3;
   repeated OrderItem items = 4;
-  Money total_amount = 5;
+  google.type.Money total_amount = 5;
 
   google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp updated_at = 7;
 }
 
 message CreateOrderRequest {
@@ -51,5 +51,6 @@ message GetOrderRequest {
 }
 
 message GetOrderResponse {
-  Order order = 1;
+  int64 order_id = 1;
+  Order order = 2;
 }

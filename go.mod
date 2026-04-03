@@ -3,12 +3,14 @@ module github.com/ChernykhITMO/order-processing-proto
 go 1.25.1
 
 require (
-	google.golang.org/grpc v1.77.0
+	google.golang.org/genproto v0.0.0-20260401024825-9d38bb4040a9
+	google.golang.org/grpc v1.79.3
 	google.golang.org/protobuf v1.36.11
 )
+
 require (
-	golang.org/x/net v0.46.1-0.20251013234738-63d1a5100f82 // indirect
-	golang.org/x/sys v0.37.0 // indirect
-	golang.org/x/text v0.30.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20251022142026-3a174f9686a8 // indirect
+	golang.org/x/net v0.52.0 // indirect
+	golang.org/x/sys v0.42.0 // indirect
+	golang.org/x/text v0.35.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260401001100-f93e5f3e9f0f // indirect
 )

@@ -1,0 +1,22 @@
+version: v1alpha
+
+lint:
+  use:
+    - DEFAULT
+
+deps:
+  - github.com/googleapis/api-common-protos@1.50.0
+  - github.com/bufbuild/protovalidate@v0.3.1
+
+generate:
+  inputs:
+    - directory: proto
+  plugins:
+    - name: go
+      out: gen/go
+      opts:
+        paths: source_relative
+    - name: go-grpc
+      out: gen/go
+      opts:
+        paths: source_relative
