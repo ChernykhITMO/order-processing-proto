@@ -7,6 +7,7 @@
 package ordersv1
 
 import (
+	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
 	money "google.golang.org/genproto/googleapis/type/money"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -453,12 +454,12 @@ var File_proto_opp_orders_v1_orders_proto protoreflect.FileDescriptor
 
 const file_proto_opp_orders_v1_orders_proto_rawDesc = "" +
 	"\n" +
-	" proto/opp/orders/v1/orders.proto\x12\torders.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"p\n" +
-	"\tOrderItem\x12\x1d\n" +
+	" proto/opp/orders/v1/orders.proto\x12\torders.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\x1a\x1bbuf/validate/validate.proto\"\x8a\x01\n" +
+	"\tOrderItem\x12&\n" +
 	"\n" +
-	"product_id\x18\x01 \x01(\x03R\tproductId\x12\x1a\n" +
-	"\bquantity\x18\x02 \x01(\x05R\bquantity\x12(\n" +
-	"\x05price\x18\x03 \x01(\v2\x12.google.type.MoneyR\x05price\"\x89\x02\n" +
+	"product_id\x18\x01 \x01(\x03B\a\xbaH\x04\"\x02 \x00R\tproductId\x12#\n" +
+	"\bquantity\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02 \x00R\bquantity\x120\n" +
+	"\x05price\x18\x03 \x01(\v2\x12.google.type.MoneyB\x06\xbaH\x03\xc8\x01\x01R\x05price\"\x89\x02\n" +
 	"\x05Order\x12\x19\n" +
 	"\border_id\x18\x01 \x01(\x03R\aorderId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\x03R\x06userId\x12.\n" +
@@ -466,19 +467,19 @@ const file_proto_opp_orders_v1_orders_proto_rawDesc = "" +
 	"\x05items\x18\x04 \x03(\v2\x14.orders.v1.OrderItemR\x05items\x125\n" +
 	"\ftotal_amount\x18\x05 \x01(\v2\x12.google.type.MoneyR\vtotalAmount\x129\n" +
 	"\n" +
-	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"Y\n" +
-	"\x12CreateOrderRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12*\n" +
-	"\x05items\x18\x02 \x03(\v2\x14.orders.v1.OrderItemR\x05items\"0\n" +
+	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"l\n" +
+	"\x12CreateOrderRequest\x12 \n" +
+	"\auser_id\x18\x01 \x01(\x03B\a\xbaH\x04\"\x02 \x00R\x06userId\x124\n" +
+	"\x05items\x18\x02 \x03(\v2\x14.orders.v1.OrderItemB\b\xbaH\x05\x92\x01\x02\b\x01R\x05items\"0\n" +
 	"\x13CreateOrderResponse\x12\x19\n" +
-	"\border_id\x18\x01 \x01(\x03R\aorderId\",\n" +
-	"\x0fGetOrderRequest\x12\x19\n" +
-	"\border_id\x18\x01 \x01(\x03R\aorderId\"U\n" +
+	"\border_id\x18\x01 \x01(\x03R\aorderId\"5\n" +
+	"\x0fGetOrderRequest\x12\"\n" +
+	"\border_id\x18\x01 \x01(\x03B\a\xbaH\x04\"\x02 \x00R\aorderId\"U\n" +
 	"\x10GetOrderResponse\x12\x19\n" +
 	"\border_id\x18\x01 \x01(\x03R\aorderId\x12&\n" +
-	"\x05order\x18\x02 \x01(\v2\x10.orders.v1.OrderR\x05order\"0\n" +
-	"\x15ListUserOrdersRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\x03R\x06userId*\x81\x01\n" +
+	"\x05order\x18\x02 \x01(\v2\x10.orders.v1.OrderR\x05order\"9\n" +
+	"\x15ListUserOrdersRequest\x12 \n" +
+	"\auser_id\x18\x01 \x01(\x03B\a\xbaH\x04\"\x02 \x00R\x06userId*\x81\x01\n" +
 	"\vOrderStatus\x12\x1c\n" +
 	"\x18ORDER_STATUS_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14ORDER_STATUS_CREATED\x10\x01\"\x04\b\x02\x10\x02\"\x04\b\x03\x10\x03*\x16ORDER_STATUS_PROCESSED*\x16ORDER_STATUS_CANCELLED2\xea\x01\n" +
