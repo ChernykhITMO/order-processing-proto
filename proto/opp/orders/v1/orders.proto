@@ -10,6 +10,7 @@ import "google/type/money.proto";
 service OrdersService {
   rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
   rpc GetOrder (GetOrderRequest) returns (GetOrderResponse);
+  rpc ListUserOrders(ListUserOrdersRequest) returns (stream Order);
 }
 
 enum OrderStatus {
@@ -53,4 +54,8 @@ message GetOrderRequest {
 message GetOrderResponse {
   int64 order_id = 1;
   Order order = 2;
+}
+
+message ListUserOrdersRequest {
+  int64 user_id = 1;
 }

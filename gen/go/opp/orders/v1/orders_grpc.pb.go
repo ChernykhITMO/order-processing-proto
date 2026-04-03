@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	OrdersService_CreateOrder_FullMethodName = "/orders.v1.OrdersService/CreateOrder"
-	OrdersService_GetOrder_FullMethodName    = "/orders.v1.OrdersService/GetOrder"
+	OrdersService_CreateOrder_FullMethodName    = "/orders.v1.OrdersService/CreateOrder"
+	OrdersService_GetOrder_FullMethodName       = "/orders.v1.OrdersService/GetOrder"
+	OrdersService_ListUserOrders_FullMethodName = "/orders.v1.OrdersService/ListUserOrders"
 )
 
 // OrdersServiceClient is the client API for OrdersService service.
@@ -29,6 +30,7 @@ const (
 type OrdersServiceClient interface {
 	CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
 	GetOrder(ctx context.Context, in *GetOrderRequest, opts ...grpc.CallOption) (*GetOrderResponse, error)
+	ListUserOrders(ctx context.Context, in *ListUserOrdersRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Order], error)
 }
 
 type ordersServiceClient struct {
@@ -59,12 +61,32 @@ func (c *ordersServiceClient) GetOrder(ctx context.Context, in *GetOrderRequest,
 	return out, nil
 }
 
+func (c *ordersServiceClient) ListUserOrders(ctx context.Context, in *ListUserOrdersRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Order], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &OrdersService_ServiceDesc.Streams[0], OrdersService_ListUserOrders_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[ListUserOrdersRequest, Order]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type OrdersService_ListUserOrdersClient = grpc.ServerStreamingClient[Order]
+
 // OrdersServiceServer is the server API for OrdersService service.
 // All implementations must embed UnimplementedOrdersServiceServer
 // for forward compatibility.
 type OrdersServiceServer interface {
 	CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error)
 	GetOrder(context.Context, *GetOrderRequest) (*GetOrderResponse, error)
+	ListUserOrders(*ListUserOrdersRequest, grpc.ServerStreamingServer[Order]) error
 	mustEmbedUnimplementedOrdersServiceServer()
 }
 
@@ -80,6 +102,9 @@ func (UnimplementedOrdersServiceServer) CreateOrder(context.Context, *CreateOrde
 }
 func (UnimplementedOrdersServiceServer) GetOrder(context.Context, *GetOrderRequest) (*GetOrderResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetOrder not implemented")
+}
+func (UnimplementedOrdersServiceServer) ListUserOrders(*ListUserOrdersRequest, grpc.ServerStreamingServer[Order]) error {
+	return status.Error(codes.Unimplemented, "method ListUserOrders not implemented")
 }
 func (UnimplementedOrdersServiceServer) mustEmbedUnimplementedOrdersServiceServer() {}
 func (UnimplementedOrdersServiceServer) testEmbeddedByValue()                       {}
@@ -138,6 +163,17 @@ func _OrdersService_GetOrder_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrdersService_ListUserOrders_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ListUserOrdersRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(OrdersServiceServer).ListUserOrders(m, &grpc.GenericServerStream[ListUserOrdersRequest, Order]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type OrdersService_ListUserOrdersServer = grpc.ServerStreamingServer[Order]
+
 // OrdersService_ServiceDesc is the grpc.ServiceDesc for OrdersService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -154,6 +190,12 @@ var OrdersService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _OrdersService_GetOrder_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "ListUserOrders",
+			Handler:       _OrdersService_ListUserOrders_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "proto/opp/orders/v1/orders.proto",
 }
