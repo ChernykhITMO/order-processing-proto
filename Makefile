@@ -8,6 +8,7 @@ proto: proto-deps
 	rm -rf $(GEN_DIR)
 	@mkdir -p $(GEN_DIR)
 	$(EASYP) generate
+	@if [ -d $(GEN_DIR)/proto ]; then mv $(GEN_DIR)/proto/* $(GEN_DIR)/; rmdir $(GEN_DIR)/proto; fi
 
 proto-deps:
 	$(EASYP) mod download
